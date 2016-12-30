@@ -60,7 +60,7 @@ names(tidy_fulldata) <- sub("\\)","", names(tidy_fulldata))
 write.csv(tidy_fulldata, file = "tidy_fulldata.csv")
 
 ## create a new summary dataframe that contains the mean of each variable grouped by Subject
-summary_data_set <- means_n_stds %>% 
+summary_data_set <- tidy_fulldata %>% 
   group_by(subject_id) %>%
   summarise_each(funs(mean(., na.rm = TRUE)))
 
