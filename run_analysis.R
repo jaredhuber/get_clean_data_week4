@@ -51,8 +51,10 @@ all_data <- all_data[ , !duplicated(colnames(all_data))]
 ##rename the column containing Subject ID to be more clear 
 all_data <- rename(all_data, subject_id = V1)
 
-## select only those columns containing a mean or a standard deviation
-tidy_fulldata <- select(all_data, matches("(mean|std|subject)"))
+## select only those columns containing a mean or a standard deviation and clean up their names
+tidy_fulldata <- select(all_data, matches("(mean\\(|std\\(|subject)"))
+names(tidy_fulldata) <- sub("\\(","", names(tidy_fulldata))
+names(tidy_fulldata) <- sub("\\)","", names(tidy_fulldata))
 
 ## export tidy full data to a csv
 write.csv(tidy_fulldata, file = "tidy_fulldata.csv")
@@ -64,3 +66,4 @@ summary_data_set <- means_n_stds %>%
 
 ##export the summary data to a csv
 write.csv(summary_data_set, file = "summary_data.csv")
+write.table(summary_data_set, file = "summary_data.txt", row.names = FALSE)
